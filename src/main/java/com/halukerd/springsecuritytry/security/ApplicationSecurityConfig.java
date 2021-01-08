@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import static com.halukerd.springsecuritytry.security.ApplicationUserRole.*;
+
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -26,8 +28,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .antMatchers("/api/**").hasRole(STUDENT.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -37,14 +41,28 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     @Bean
     protected UserDetailsService userDetailsService() {
-        UserDetails annaSmithUser = User.builder()
+        UserDetails albusDumbledoreUser = User.builder()
                 .username("albus")
                 .password(passwordEncoder.encode("sherbetlemon"))
-                .roles("headmaster") // ROLE_STUDENT
+                .roles(HEADMASTER.name()) // ROLE_STUDENT
+                .build();
+
+        UserDetails nevilleLongbottomUser = User.builder()
+                .username("neville")
+                .password(passwordEncoder.encode("1234"))
+                .roles(STUDENT.name()) // ROLE_STUDENT
+                .build();
+
+        UserDetails percyUser = User.builder()
+                .username("percy")
+                .password(passwordEncoder.encode("iamprefect"))
+                .roles(PREFECT.name()) // ROLE_STUDENT
                 .build();
 
         return new InMemoryUserDetailsManager(
-                annaSmithUser
+                albusDumbledoreUser,
+                nevilleLongbottomUser,
+                percyUser
         );
     }
 }
