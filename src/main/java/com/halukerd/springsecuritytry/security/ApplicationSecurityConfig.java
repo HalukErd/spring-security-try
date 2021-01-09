@@ -28,10 +28,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+//                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
                 .antMatchers("/api/**").hasRole(STUDENT.name())
+//                .antMatchers(HttpMethod.DELETE, "/management/api/**").hasAuthority(COURSE_WRITE.getPermission())
+//                .antMatchers(HttpMethod.POST, "/management/api/**").hasAuthority(COURSE_WRITE.getPermission())
+//                .antMatchers(HttpMethod.PUT, "/management/api/**").hasAuthority(COURSE_WRITE.getPermission())
+//                .antMatchers(HttpMethod.GET, "/management/api/**").hasAnyRole(HEADMASTER.name(), PREFECT.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -44,19 +48,22 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails albusDumbledoreUser = User.builder()
                 .username("albus")
                 .password(passwordEncoder.encode("sherbetlemon"))
-                .roles(HEADMASTER.name()) // ROLE_STUDENT
+                .authorities(HEADMASTER.getGrantedAuthorities())
+//                .roles(HEADMASTER.name()) // ROLE_STUDENT
                 .build();
 
         UserDetails nevilleLongbottomUser = User.builder()
                 .username("neville")
                 .password(passwordEncoder.encode("1234"))
-                .roles(STUDENT.name()) // ROLE_STUDENT
+                .authorities(STUDENT.getGrantedAuthorities())
+//                .roles(STUDENT.name()) // ROLE_STUDENT
                 .build();
 
         UserDetails percyUser = User.builder()
                 .username("percy")
                 .password(passwordEncoder.encode("iamprefect"))
-                .roles(PREFECT.name()) // ROLE_STUDENT
+                .authorities(PREFECT.getGrantedAuthorities())
+//                .roles(PREFECT.name()) // ROLE_STUDENT
                 .build();
 
         return new InMemoryUserDetailsManager(
