@@ -1,10 +1,10 @@
 package com.halukerd.springsecuritytry.security;
 
 public enum ApplicationUserPermission {
-    COURSE_READ("course:read"),
-    COURSE_WRITE("course:write"),
     STUDENT_READ("student:read"),
-    STUDENT_WRITE("student:write");
+    STUDENT_WRITE("student:write"),
+    COURSE_READ("course:read"),
+    COURSE_WRITE("course:write");
 
     private final String permission;
 
@@ -16,3 +16,4 @@ public enum ApplicationUserPermission {
         return permission;
     }
 }
+

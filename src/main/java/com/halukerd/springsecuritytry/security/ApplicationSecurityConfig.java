@@ -16,6 +16,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import static com.halukerd.springsecuritytry.security.ApplicationUserRole.*;
 
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -45,28 +46,28 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     @Bean
     protected UserDetailsService userDetailsService() {
-        UserDetails albusDumbledoreUser = User.builder()
-                .username("albus")
-                .password(passwordEncoder.encode("lemondrop"))
-                .authorities(HEADMASTER.getGrantedAuthorities())
-                .build();
-
-        UserDetails nevilleLongbottomUser = User.builder()
-                .username("neville")
-                .password(passwordEncoder.encode("1234"))
+        UserDetails annaSmithUser = User.builder()
+                .username("annasmith")
+                .password(passwordEncoder.encode("password"))
                 .authorities(STUDENT.getGrantedAuthorities())
                 .build();
 
-        UserDetails percyUser = User.builder()
-                .username("percy")
-                .password(passwordEncoder.encode("iamprefect"))
-                .authorities(PREFECT.getGrantedAuthorities())
+        UserDetails lindaUser = User.builder()
+                .username("linda")
+                .password(passwordEncoder.encode("password123"))
+                .authorities(ADMIN.getGrantedAuthorities())
+                .build();
+
+        UserDetails tomUser = User.builder()
+                .username("tom")
+                .password(passwordEncoder.encode("password123"))
+                .authorities(ADMINTRAINEE.getGrantedAuthorities())
                 .build();
 
         return new InMemoryUserDetailsManager(
-                albusDumbledoreUser,
-                nevilleLongbottomUser,
-                percyUser
+                annaSmithUser,
+                lindaUser,
+                tomUser
         );
     }
 }

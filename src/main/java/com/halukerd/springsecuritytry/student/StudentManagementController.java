@@ -1,5 +1,6 @@
 package com.halukerd.springsecuritytry.student;
 
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +46,6 @@ public class StudentManagementController {
     @PreAuthorize("hasAuthority('student:write')")
     public void updateStudent(@PathVariable("studentId") Integer studentId, @RequestBody Student student) {
         System.out.println("updateStudent");
-        System.out.printf("%s %s%n", studentId, student);
+        System.out.println(String.format("%s %s", studentId, student));
     }
 }
