@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import static com.halukerd.springsecuritytry.security.ApplicationUserPermission.*;
 
 public enum ApplicationUserRole {
-    STUDENT(Sets.newHashSet()),
+    STUDENT(Sets.newHashSet(STUDENT_READ)),
     HEADMASTER(Sets.newHashSet(COURSE_READ, COURSE_WRITE, STUDENT_READ, STUDENT_WRITE)),
     PREFECT(Sets.newHashSet(COURSE_READ, STUDENT_READ));
 
